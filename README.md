@@ -50,10 +50,15 @@
 
 
 ## Content
+### Basics
 - [Important libraries](#libraries)
 - [Acoustic message](#acc_mess)
 - [Path and File Handling - os module](#path_and_file_os)
 - [Path and File Handling - pathlib module](#path_and_file_pl)
+
+### Numpy / Pandas
+- [Numpy](#numpy)
+- [Pandas](#pandas)
 
 # Important libraries <a id='libraries'></a>
 ```python
