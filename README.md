@@ -363,3 +363,149 @@ except FileNotFoundError:
 else:
     # exists
 ```
+
+# Pandas <a id='pandas'></a>
+## Create DataFrame
+#### Create Dataframe from list of tuples
+```python
+BabyDataSet = [('Bob', 968), ('Jessica', 155), ('Mary', 77), ('John', 578), ('Mel', 973)]
+df = pd.DataFrame(data=BabyDataSet, columns=['Names', 'Births'])
+```
+#### Create Dataframe from dict
+```python
+BabyDataSet = {'Names': ['Bob', 'Jessica', 'Mary' , 'John', 'Mel'], 'Births' : [968, 155, 77, 578, 973]}
+df = pd.DataFrame.from_dict(BabyDataSet)
+```    
+## Read and Save Dataframes
+#### Read DataFrame from Excel
+```python
+df = pd.read_excel('path/to/file')
+```
+#### Save DataFrame to Excel
+```python
+df.to_excel('path/to/file', index=True)
+```
+
+#### Read DataFrame from csv
+```python
+df = pd.read_csv('path/to/file.csv') 
+```
+#### Save DataFrame to csv
+```python
+df.to_csv('path/to/file.csv', sep='\t')
+```
+## Sort Dataframes
+#### Sort column names
+```python
+df = df.reindex(['col1', 'col2', 'col3', 'col4'], axis=1)
+```
+
+#### Sort by values of one column 
+```python
+final_df = df.sort_values(by='col1', ascending=False)
+final_df = df.sort_values(by=['col1'], ascending=False)
+```
+#### Sort by values multiple columns
+```python
+final_df = df.sort_values(by=['col1', 'col2'], ascending=False)
+```
+#### Reset index number, Don't get index as a column
+```python
+df = df.reset_index(drop=True)
+```
+
+#### Reset index number, Get index as a column
+```python
+df = df.reset_index(drop=False)
+```
+
+## Check Dataframes for content
+#### Check if DataFrame is empty
+```python
+if df.empty:
+    print('DataFrame is empty!')
+```
+#### Check if string is in a pandas dataframe
+```python
+if df['Names'].str.contains('Mel').any():
+    print ("Mel is there")
+```
+
+#### Remove dublicates
+```python
+df.drop_duplicates(subset ='col1', keep = 'first', inplace = True) 
+```
+
+## Get rows 
+#### First row
+```python
+first_row = df.iloc[0]
+```
+#### Last row
+```python
+last_row = df.iloc[-1]
+```
+
+## Arithmetics in one column
+#### Sum up values of one column within a slice
+```python
+data = {'x':[1,2,3,4,5], 
+        'y':[2,5,7,9,11], 
+        'z':[2,6,7,3,4]}
+df=pd.DataFrame(data, index=list('abcde'))
+print (df)
+   x   y  z
+a  1   2  2
+b  2   5  6
+c  3   7  7
+d  4   9  3
+e  5  11  4
+
+b = df['x'].iloc[:3].sum()
+
+print (b)
+6
+```
+
+## Replace rows under a condition
+```python
+import numpy as np
+import pandas as pd
+
+df = pd.DataFrame(np.random.randn(5,4), columns=list('abcd'))
+df['a'].iloc[0]= 1
+print(df)
+
+          a         b         c         d
+0  1.000000  0.075305 -0.594578  0.282514
+1  0.570011 -0.058905  0.652282  0.305208
+2 -1.385305  0.791065  2.219377  1.748559
+3 -2.517914  1.030741  1.745310  0.503916
+4 -0.689791  0.164660  0.209380 -0.503060
+
+df.loc[df['a'] == 1, :] = df.iloc[-1].values
+
+print('')
+print(df)
+
+          a         b         c         d
+0 -0.689791  0.164660  0.209380 -0.503060
+1  0.570011 -0.058905  0.652282  0.305208
+2 -1.385305  0.791065  2.219377  1.748559
+3 -2.517914  1.030741  1.745310  0.503916
+4 -0.689791  0.164660  0.209380 -0.503060
+```
+
+## Drop a column
+```python
+df.drop(columns=['index', 'Unnamed: 0'], inplace=True)
+```
+
+## Get Maximum of a column
+```python
+max_value = df['col1'].max()
+```
+## Get Maximum of all columns
+```python
+df.max()
+```
